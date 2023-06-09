@@ -23,7 +23,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- SpringBoot 依赖配置 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -32,7 +31,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- hutool 的依赖配置-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-bom</artifactId>
@@ -59,7 +57,6 @@
         <module>trans4j-annotation</module>
         <module>trans4j-core</module>
         <module>trans4j-spring-boot-starter</module>
-        <module>trans4j-examples</module>
     </modules>
 
     <repositories>

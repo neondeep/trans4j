@@ -1,5 +1,7 @@
 package com.fly.trans4j.autoconfigure;
 
+import com.fly.trans4j.core.AutoTrans;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -8,4 +10,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class Trans4jAutoConfiguration {
+
+    @Bean
+    public AutoTrans autoTrans(){
+        return new AutoTrans();
+    }
 }
