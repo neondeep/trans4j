@@ -40,6 +40,18 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>com.fly</groupId>
+                <artifactId>trans4j-annotation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fly</groupId>
+                <artifactId>trans4j-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -47,6 +59,7 @@
         <module>trans4j-annotation</module>
         <module>trans4j-core</module>
         <module>trans4j-spring-boot-starter</module>
+        <module>trans4j-examples</module>
     </modules>
 
     <repositories>
