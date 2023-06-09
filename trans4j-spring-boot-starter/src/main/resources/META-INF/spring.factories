@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.fly.trans4j.autoconfigure.Trans4jAutoConfiguration

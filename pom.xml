@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.fly</groupId>
+    <artifactId>trans4j</artifactId>
+    <version>1.0.0</version>
+
+    <name>trans4j</name>
+    <url>https://gitee.com/fly_project/trans4j</url>
+    <packaging>pom</packaging>
+
+    <properties>
+        <revision>1.0.0</revision>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <spring-boot.version>2.7.11</spring-boot.version>
+        <hutool.version>5.8.18</hutool.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- SpringBoot 依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- hutool 的依赖配置-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>trans4j-annotation</module>
+        <module>trans4j-core</module>
+        <module>trans4j-spring-boot-starter</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
+
