@@ -12,4 +12,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface Trans {
+
+    /**
+     * 定义翻译类型
+     */
+    TransType type() default TransType.DICT;
+
+    String key() default "";
 }
