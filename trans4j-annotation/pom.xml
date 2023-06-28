@@ -9,12 +9,5 @@
     </parent>
 
     <artifactId>trans4j-annotation</artifactId>
-
-    <description>
-        注解模块
-    </description>
-
-    <dependencies>
-
-    </dependencies>
+    <description>注解模块</description>
 </project>

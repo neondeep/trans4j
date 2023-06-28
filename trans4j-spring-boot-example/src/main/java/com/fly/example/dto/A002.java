@@ -15,6 +15,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class A002 implements TransVO {
-    @Trans(key = "sex_enum", ref = "sexName")
+    @Trans(key = "sex_enum")
     private Integer sex = 1;
+
+    @Trans(key = "sex_enum")
+    private Integer gender = 2;
 }

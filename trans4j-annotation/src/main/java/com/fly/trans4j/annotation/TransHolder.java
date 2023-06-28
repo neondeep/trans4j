@@ -1,6 +1,8 @@
 package com.fly.trans4j.annotation;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author 谢飞
@@ -11,6 +13,12 @@ public class TransHolder {
 
 
     public static void set(Map<String, Object> map) {
+        HOLDER.set(map);
+    }
+
+    public static void set(String key, Object value) {
+        Map<String, Object> map = Optional.ofNullable(get()).orElse(new HashMap<>());
+        map.put(key, value);
         HOLDER.set(map);
     }
 

@@ -10,7 +10,6 @@ import com.fly.trans4j.core.TransFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -50,9 +49,7 @@ public class DictTransService extends AbstractTransService implements Initializi
                 String value = map.get(fieldValue + "");
                 ReflectUtil.setFieldValue(vo, ref, value);
             } else {
-                Map<String, Object> transMap = new HashMap<>();
-                transMap.put("sexName", "张三" + ThreadLocalRandom.current().nextInt(100));
-                TransHolder.set(transMap);
+                TransHolder.set(field.getName() + "Name", ThreadLocalRandom.current().nextInt(100));
             }
         }
     }

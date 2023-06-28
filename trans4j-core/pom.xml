@@ -9,10 +9,7 @@
     </parent>
 
     <artifactId>trans4j-core</artifactId>
-
-    <description>
-        core模块
-    </description>
+    <description>core模块</description>
 
     <dependencies>
         <dependency>
@@ -35,17 +32,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.11.14</version>
         </dependency>
     </dependencies>
 </project>

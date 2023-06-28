@@ -31,8 +31,8 @@ public class ProxyUtil {
             DynamicType.Builder<?> builder = new ByteBuddy()
                 .subclass(vo.getClass())
                 .name(vo.getClass().getSimpleName() + "DynamicTypeBuilder" + IdUtil.fastSimpleUUID())
-                .defineMethod("getTransMap", Map.class, Modifier.PUBLIC)
-                .intercept(FixedValue.nullValue());
+                .defineMethod("getTransMap", Map.class, Modifier.PUBLIC).intercept(FixedValue.nullValue())
+                ;
 
             for (String property : transMap.keySet()) {
                 builder = builder.defineField(property, String.class, Modifier.PUBLIC);
@@ -43,7 +43,6 @@ public class ProxyUtil {
                 .getLoaded();
 
             Object newObject = targetClass.newInstance();
-            System.out.println(newObject);
 
             BeanUtils.copyProperties(vo, newObject);
 
