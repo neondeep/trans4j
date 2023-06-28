@@ -1,15 +1,20 @@
 package com.fly.trans4j.core.trans;
 
+import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.fly.trans4j.annotation.Trans;
+import com.fly.trans4j.annotation.TransHolder;
 import com.fly.trans4j.annotation.TransType;
 import com.fly.trans4j.annotation.TransVO;
 import com.fly.trans4j.core.TransFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author 谢飞
@@ -21,7 +26,7 @@ public class DictTransService extends AbstractTransService implements Initializi
         return TransType.DICT;
     }
 
-    private Map<String, Map<String, String>> localCacheMap = new ConcurrentHashMap<>();
+    private final Map<String, Map<String, String>> localCacheMap = new ConcurrentHashMap<>();
 
 
     public void refreshCache(String dictGroupCode, Map<String, String> dicMap) {
@@ -29,18 +34,26 @@ public class DictTransService extends AbstractTransService implements Initializi
     }
 
     @Override
-    public void trans(TransVO obj, List<Field> transFieldList) throws Exception {
+    public void trans(TransVO vo, List<Field> transFieldList) throws Exception {
         for (Field field : transFieldList) {
             field.setAccessible(true);
             Trans trans = field.getAnnotation(Trans.class);
             if (trans == null) {
                 continue;
             }
-            String key = trans.key();
-            Map<String, String> map = localCacheMap.get(key);
-            Object value = field.get(obj);
-            String name = map.get(value + "");
-            obj.getTransMap().put(field.getName() + "Name", name);
+            String dictKey = trans.key();
+            String ref = trans.ref();
+
+            if (StrUtil.isNotBlank(ref)) {
+                Map<String, String> map = localCacheMap.get(dictKey);
+                Object fieldValue = field.get(vo);
+                String value = map.get(fieldValue + "");
+                ReflectUtil.setFieldValue(vo, ref, value);
+            } else {
+                Map<String, Object> transMap = new HashMap<>();
+                transMap.put("sexName", "张三" + ThreadLocalRandom.current().nextInt(100));
+                TransHolder.set(transMap);
+            }
         }
     }
 

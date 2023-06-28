@@ -13,5 +13,5 @@ import java.util.List;
 public interface TransService {
     TransType getType();
 
-    void trans(TransVO obj, List<Field> transFieldList) throws Exception;
+    void trans(TransVO vo, List<Field> transFieldList) throws Exception;
 }

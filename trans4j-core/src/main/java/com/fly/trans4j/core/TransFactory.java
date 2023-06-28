@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class TransFactory {
 
-    private static Map<TransType, TransService> transServiceMap = new LinkedHashMap<>();
+    private static final Map<TransType, TransService> transServiceMap = new LinkedHashMap<>();
 
     public static void register(TransType transType, TransService transService) {
         transServiceMap.put(transType, transService);

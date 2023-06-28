@@ -1,15 +1,13 @@
 package com.fly.example.controller;
 
-import com.fly.example.dto.Student;
+import com.fly.example.dto.A001;
+import com.fly.example.dto.A002;
 import com.fly.example.util.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author 谢飞
@@ -21,33 +19,15 @@ import java.util.List;
 public class TestController {
 
 
-    @Operation(summary = "返回字符串")
-    @GetMapping("returnString")
-    public String returnString() {
-        return "success";
+    @Operation(summary = "字典翻译a001（ref指定字段）")
+    @GetMapping("a001")
+    public R<A001> a001() {
+        return R.success(new A001());
     }
 
-    @Operation(summary = "返回对象")
-    @GetMapping("returnObj")
-    public Student returnObj() {
-        return new Student().setId(1).setSex(1);
-    }
-
-    @Operation(summary = "返回对象列表")
-    @GetMapping("returnListObj")
-    public List<Student> returnListObj() {
-        return Collections.singletonList(new Student().setId(1).setSex(1));
-    }
-
-    @Operation(summary = "返回R对象")
-    @GetMapping("returnRObj")
-    public R<Student> returnRObj() {
-        return R.success(new Student().setId(1).setSex(1));
-    }
-
-    @Operation(summary = "返回R对象列表")
-    @GetMapping("returnRListObj")
-    public R<List<Student>> returnRListObj() {
-        return R.success(Collections.singletonList(new Student().setId(1).setSex(1)));
+    @Operation(summary = "字典翻译a002（代理动态生成字段）")
+    @GetMapping("a002")
+    public R<A002> a002() {
+        return R.success(new A002());
     }
 }

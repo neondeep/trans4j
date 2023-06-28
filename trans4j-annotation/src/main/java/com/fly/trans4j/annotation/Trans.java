@@ -19,4 +19,6 @@ public @interface Trans {
     TransType type() default TransType.DICT;
 
     String key() default "";
+
+    String ref() default "";
 }

@@ -1,6 +1,5 @@
 package com.fly.example.util;
 
-import com.fly.trans4j.core.DataWrapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class R<T> implements Serializable, DataWrapper {
+public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final Integer SUCCESS = 200;
@@ -74,10 +73,5 @@ public class R<T> implements Serializable, DataWrapper {
         result.setData(data);
         result.setMsg(msg);
         return result;
-    }
-
-    @Override
-    public Object getTransData() {
-        return data;
     }
 }

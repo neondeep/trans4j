@@ -1,12 +1,10 @@
 package com.fly.trans4j.autoconfigure;
 
-import com.fly.trans4j.core.BodyTrans;
 import com.fly.trans4j.core.ResponseBodyAdviceTrans;
-import com.fly.trans4j.core.trans.AbstractTransService;
+import com.fly.trans4j.core.ResponseFilter;
 import com.fly.trans4j.core.trans.DictTransService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author 谢飞
@@ -15,19 +13,19 @@ import org.springframework.context.annotation.Import;
 @Configuration
 public class Trans4jAutoConfiguration {
 
-//    @Bean
-//    public BodyTrans bodyTrans(){
-//        return new BodyTrans();
-//    }
-
     @Bean
-    public ResponseBodyAdviceTrans responseBodyAdviceTrans(){
+    public ResponseBodyAdviceTrans responseBodyAdviceTrans() {
         return new ResponseBodyAdviceTrans();
     }
 
     @Bean
-    public DictTransService dictTransService(){
+    public DictTransService dictTransService() {
         return new DictTransService();
+    }
+
+    @Bean
+    public ResponseFilter responseFilter(){
+        return new ResponseFilter();
     }
 
 }
