@@ -4,15 +4,13 @@ import cn.hutool.core.util.ReflectUtil;
 import com.fly.trans4j.annotation.Trans;
 import com.fly.trans4j.annotation.TransType;
 import com.fly.trans4j.annotation.TransVO;
-import com.fly.trans4j.core.trans.TransService;
+import com.fly.trans4j.trans.TransService;
+import com.fly.trans4j.util.ProxyUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 谢飞
@@ -22,8 +20,6 @@ import java.util.Map;
 public class TransMapper {
     private static final TransMapper INSTANCE = new TransMapper();
 
-    private final static boolean isProxy = true;
-
     private TransMapper() {
     }
 
@@ -32,27 +28,42 @@ public class TransMapper {
     }
 
 
-    public Object trans(Object object) throws Exception {
-        if (null == object) {
-            return null;
-        }
-        if (object instanceof TransVO) {
-            handlerTransVO((TransVO) object);
-        } else if (object.getClass().getName().startsWith("java.")) {
+    /**
+     * 翻译
+     */
+    public Object trans(Object object) {
+        try {
+            if (null == object) {
+                return null;
+            }
+            // 对象翻译
+            if (object instanceof TransVO) {
+                handlerTransVO((TransVO) object);
+                // 看TransVO是否还有嵌套属性需要翻译
+                transObjectFields(object);
+                // 对象列表翻译
+            } else if (object instanceof Collection) {
+                return transObjectListFields(object);
+            } else if (object.getClass().getName().startsWith("java.")) {
+                return object;
+            } else {
+                // 如果不是TransVO，循环遍历看是否有字段类型属于TransVO
+                transObjectFields(object);
+            }
+            TransConfiguration configuration = TransConfiguration.getInstance();
+            return (configuration.getEnableProxy()) ? ProxyUtil.createProxyVo(object) : object;
+        } catch (Exception e) {
+            log.error("翻译失败", e);
             return object;
-        } else {
-            // 如果不是TransVO，循环遍历看是否有字典类型属于TransVO
-            transFields(object);
         }
-        return (isProxy && object instanceof TransVO) ? ProxyUtil.createProxyVo((TransVO) object) : object;
     }
 
     /**
-     * 翻译一个object的子属性
+     * 翻译一个object的所有字段
      *
-     * @param object object
+     * @param object 对象
      */
-    public void transFields(Object object) throws Exception {
+    public void transObjectFields(Object object) throws Exception {
         // 获取一个类的所有字段，包括父类
         Field[] fields = ReflectUtil.getFields(object.getClass());
         for (Field field : fields) {
@@ -66,12 +77,43 @@ public class TransMapper {
         }
     }
 
+    /**
+     * 翻译一个List<object>的所有字段
+     *
+     * @param collection 对象列表
+     */
+    public Object transObjectListFields(Object collection) throws Exception {
+        Collection<Object> result;
+        Collection<?> objectList = (Collection<?>) collection;
+        if (objectList instanceof List) {
+            result = new ArrayList<>();
+        } else if (objectList instanceof Set) {
+            result = new HashSet<>();
+        } else {
+            return objectList;
+        }
+        for (Object object : objectList) {
+            if (object instanceof TransVO) {
+                TransVO vo = (TransVO) object;
+                handlerTransVO(vo);
+                result.add(ProxyUtil.createProxyVo(vo));
+            } else {
+                transObjectFields(object);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 翻译一个TransVO对象
+     *
+     * @param vo TransVO
+     */
     private void handlerTransVO(TransVO vo) throws Exception {
         final Map<TransType, List<Field>> transFieldMap = new HashMap<>();
         Field[] fields = ReflectUtil.getFields(vo.getClass());
         for (Field field : fields) {
             int mod = field.getModifiers();
-            // 如果是 static, final, volatile, transient 的字段，则直接跳过
             if (Modifier.isStatic(mod) || Modifier.isFinal(mod) || Modifier.isVolatile(mod)) {
                 continue;
             }
@@ -84,7 +126,6 @@ public class TransMapper {
                 transFieldMap.put(transType, fieldList);
             }
         }
-
 
         for (Map.Entry<TransType, List<Field>> entry : transFieldMap.entrySet()) {
             TransType transType = entry.getKey();

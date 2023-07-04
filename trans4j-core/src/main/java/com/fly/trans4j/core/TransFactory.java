@@ -1,7 +1,7 @@
 package com.fly.trans4j.core;
 
 import com.fly.trans4j.annotation.TransType;
-import com.fly.trans4j.core.trans.TransService;
+import com.fly.trans4j.trans.TransService;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
