@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.fly</groupId>
+    <groupId>com.neondeep</groupId>
     <artifactId>trans4j</artifactId>
     <version>1.0.0</version>
 
     <name>trans4j</name>
-    <url>https://gitee.com/fly_project/trans4j</url>
+    <url>https://gitee.com/neondeep/trans4j</url>
     <packaging>pom</packaging>
 
     <properties>
@@ -31,12 +31,12 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.fly</groupId>
+                <groupId>com.neondeep</groupId>
                 <artifactId>trans4j-annotation</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.fly</groupId>
+                <groupId>com.neondeep</groupId>
                 <artifactId>trans4j-core</artifactId>
                 <version>${revision}</version>
             </dependency>
