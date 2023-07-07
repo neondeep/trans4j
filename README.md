@@ -3,7 +3,7 @@
 ## 介绍
 
 - Trans4j是一个翻译框架，旨在为Java应用程序提供多种翻译功能。它支持字典翻译、枚举翻译和数据库翻译，帮助开发人员简化开发，并使开发人员能够轻松地处理不同类型的翻译需求
-- 遵循MIT许可，因此您可以对它进行复制、修改、传播并用于任何个人或商业行为。
+- 遵循Apache-2.0许可，因此您可以对它进行复制、修改、传播并用于任何个人或商业行为。
 
 ## 适用场景
 
@@ -21,7 +21,7 @@
 ```xml
 
 <dependency>
-    <groupId>com.fly.trans4j</groupId>
+    <groupId>io.github.neondeep</groupId>
     <artifactId>trans4j-spring-boot-starter</artifactId>
     <version>1.0.0</version>
 </dependency>

@@ -3,16 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.neondeep</groupId>
+        <groupId>io.github.neondeep</groupId>
         <artifactId>trans4j</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>trans4j-spring-boot-starter</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.neondeep</groupId>
+            <groupId>io.github.neondeep</groupId>
             <artifactId>trans4j-core</artifactId>
         </dependency>
         <dependency>
@@ -24,4 +24,14 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
