@@ -8,8 +8,33 @@
     <artifactId>trans4j</artifactId>
     <version>${revision}</version>
     <name>trans4j</name>
+    <description>trans4j是一个翻译框架，旨在为Java应用程序提供多种翻译功能</description>
     <url>https://gitee.com/neondeep/trans4j</url>
     <packaging>pom</packaging>
+
+    <modules>
+        <module>trans4j-annotation</module>
+        <module>trans4j-core</module>
+        <module>trans4j-spring-boot-starter</module>
+    </modules>
+
+    <properties>
+        <revision>1.0.0</revision><!-- -SNAPSHOT -->
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!--依赖版本-->
+        <spring.version>5.3.27</spring.version>
+        <spring-boot.version>2.7.11</spring-boot.version>
+        <aspectj.version>1.9.7</aspectj.version>
+        <lombok.version>1.18.26</lombok.version>
+        <hutool.version>5.8.18</hutool.version>
+        <slf4j-api.version>1.7.36</slf4j-api.version>
+        <servlet-api.version>4.0.1</servlet-api.version>
+        <byte-buddy.version>1.12.23</byte-buddy.version>
+    </properties>
 
     <licenses>
         <license>
@@ -27,27 +52,10 @@
     </developers>
 
     <scm>
-        <tag>master</tag>
-        <url>https://gitee.com/dromara/sms4j.git</url>
-        <connection>scm:git:https://gitee.com/dromara/sms4j.git</connection>
-        <developerConnection>scm:git:https://gitee.com/dromara/sms4j.git</developerConnection>
+        <url>https://gitee.com/neondeep/trans4j</url>
+        <connection>scm:git:https://gitee.com/neondeep/trans4j.git</connection>
+        <developerConnection>scm:git:https://gitee.com/neondeep/trans4j.git</developerConnection>
     </scm>
-
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <!--依赖版本-->
-        <spring.version>5.3.27</spring.version>
-        <spring-boot.version>2.7.11</spring-boot.version>
-        <aspectj.version>1.9.7</aspectj.version>
-        <lombok.version>1.18.26</lombok.version>
-        <hutool.version>5.8.18</hutool.version>
-        <slf4j-api.version>1.7.36</slf4j-api.version>
-        <servlet-api.version>4.0.1</servlet-api.version>
-        <byte-buddy.version>1.12.23</byte-buddy.version>
-    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -113,16 +121,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <modules>
-        <module>trans4j-annotation</module>
-        <module>trans4j-core</module>
-        <module>trans4j-spring-boot-starter</module>
-    </modules>
-
-    <!-- https://central.sonatype.org/publish/publish-guide/ -->
-    <!-- https://central.sonatype.org/publish/publish-maven/ -->
-    <!-- https://s01.oss.sonatype.org/ -->
-    <!-- https://oss.sonatype.org/ -->
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -156,19 +154,33 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9.1</version>
                 <configuration>
-                    <show>private</show>
-                    <nohelp>true</nohelp>
+                    <show>private</show><!--设置 Javadoc 是否包含私有成员的文档。在这个例子中，Javadoc 将会包含私有成员的文档-->
+                    <nohelp>true</nohelp><!--禁用 Javadoc 中的“使用- help”链接-->
                     <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
                     <docencoding>UTF-8</docencoding>
-                    <additionalparam>-Xdoclint:none</additionalparam>
-                    <!-- TODO 临时解决不规范的javadoc生成报错,后面要规范doc后把这行去掉 -->
+                    <additionalparam>-Xdoclint:none</additionalparam><!--添加额外的参数到 Javadoc 命令行。在这个例子中，添加了 -Xdoclint:none 参数，用于禁用 Javadoc 的 lint 检查。-->
                 </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Gpg Signature -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
