@@ -50,10 +50,11 @@
         <!-- https://s01.oss.sonatype.org/content/repositories/releases//io/github/neondeep/ -->
         <!-- https://s01.oss.sonatype.org/content/groups/staging/io/github/neondeep/ -->
         <!-- https://s01.oss.sonatype.org/content/groups/public/io/github/neondeep/ -->
+        <!-- https://repo1.maven.org/maven2/io/github/neondeep/ -->
         <dependency>
             <groupId>io.github.neondeep</groupId>
             <artifactId>trans4j-spring-boot-starter</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
