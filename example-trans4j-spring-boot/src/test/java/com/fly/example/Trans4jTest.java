@@ -29,7 +29,7 @@ import java.util.Arrays;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
-public class TestControllerTest {
+public class Trans4jTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,21 +44,22 @@ public class TestControllerTest {
             .andExpect(MockMvcResultMatchers.content()
                 .json(wrapperR(new NoTrans())))
             .andReturn();
-        System.out.println(mvcResult);
     }
+
 
     @Test
     @Order(101)
     @DisplayName("字典翻译（ref）")
     public void dictRefTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/test/dictRef"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictRef"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.content()
-                .json(wrapperR(
+                .json(
+                    wrapperR(
                         new DictRef().setSex(1).setSexName("男").setGender(2).setGenderName("女")
                     )
-                )
+                    , true)
             );
     }
 
@@ -66,17 +67,18 @@ public class TestControllerTest {
     @Order(102)
     @DisplayName("字典翻译（ref列表）")
     public void dictRefListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/test/dictRefList"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictRefList"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.content()
-                .json(wrapperR(
+                .json(
+                    wrapperR(
                         Arrays.asList(
                             new DictRef().setSex(1).setSexName("男").setGender(2).setGenderName("女"),
                             new DictRef().setSex(2).setSexName("女").setGender(1).setGenderName("男")
                         )
                     )
-                )
+                    , true)
             );
     }
 
@@ -84,14 +86,15 @@ public class TestControllerTest {
     @Order(103)
     @DisplayName("字典翻译（ref嵌套）")
     public void dictRefNestTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/test/dictRefNest"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictRefNest"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.content()
-                .json(wrapperR(
+                .json(
+                    wrapperR(
                         new DictRefNest().setSex(1).setSexName("男").setGender(2).setGenderName("女").setStudent(new DictRefNest.Student().setSex(1).setSexName("男"))
                     )
-                )
+                    , true)
             );
     }
 
@@ -100,32 +103,84 @@ public class TestControllerTest {
     @Order(104)
     @DisplayName("字典翻译（代理）")
     public void dictProxyTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/test/dictProxy"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictProxy"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.content()
-                .json(wrapperR(
+                .json(
+                    wrapperR(
                         new JSONObject().set("sex", 1).set("sexName", "男").set("gender", 2).set("genderName", "女")
                     )
-                )
+                    , true)
             );
     }
+
 
     @Test
     @Order(105)
     @DisplayName("字典翻译（代理列表）")
     public void dictProxyListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/test/dictProxyList"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictProxyList"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.content()
-                .json(wrapperR(
+                .json(
+                    wrapperR(
                         Arrays.asList(
                             new JSONObject().set("sex", 1).set("sexName", "男").set("gender", 2).set("genderName", "女"),
                             new JSONObject().set("sex", 2).set("sexName", "女").set("gender", 1).set("genderName", "男")
                         )
                     )
-                )
+                    , true)
+            );
+    }
+
+    @Test
+    @Order(106)
+    @DisplayName("字典翻译（代理嵌套）")
+    public void dictProxyNestTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictProxyNest"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(wrapperR(
+                        new JSONObject()
+                            .set("sex", 1).set("sexName", "男")
+                            .set("gender", 2).set("genderName", "女")
+                            .set("teacher", new JSONObject().set("sex", 2).set("sexName", "女")
+                                .set("student", new JSONObject().set("sex", 1).set("sexName", "男")))
+                    )
+                    , true)
+            );
+    }
+
+    @Test
+    @Order(107)
+    @DisplayName("字典翻译（ref json 忽略）")
+    public void dictRefJsonIgnore() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictRefJsonIgnore"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(wrapperR(
+                        new JSONObject().set("sexName", "男").set("genderName", "女")
+                    )
+                    , true)
+            );
+    }
+
+    @Test
+    @Order(107)
+    @DisplayName("字典翻译（代理自定义字段后缀）")
+    public void dictProxySuffix() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictProxySuffix"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(wrapperR(
+                        new JSONObject().set("sex", 2).set("sexDesc", "女")
+                    )
+                    , true)
             );
     }
 
@@ -134,29 +189,31 @@ public class TestControllerTest {
     @Order(201)
     @DisplayName("枚举翻译（ref）")
     public void enumRefTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/test/enumRef"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/enum/enumRef"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.content()
-                .json(wrapperR(
+                .json(
+                    wrapperR(
                         new EnumRef().setSex(SexEnum.MALE).setSexEnumNameRef("男")
                     )
-                )
+                    , true)
             );
     }
 
     @Test
-    @Order(204)
+    @Order(202)
     @DisplayName("枚举翻译（代理）")
     public void enumProxyTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/test/enumProxy"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/enum/enumProxy"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.content()
-                .json(wrapperR(
+                .json(
+                    wrapperR(
                         new JSONObject().set("sex", "MALE").set("sexName", "男")
                     )
-                )
+                    , true)
             );
     }
 

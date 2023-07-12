@@ -23,7 +23,7 @@
 <dependency>
     <groupId>io.github.neondeep</groupId>
     <artifactId>trans4j-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 

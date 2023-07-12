@@ -3,7 +3,7 @@ package com.fly.trans4j.trans;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fly.trans4j.annotation.Trans;
-import com.fly.trans4j.annotation.TransHolder;
+import com.fly.trans4j.util.TransHolder;
 import com.fly.trans4j.annotation.TransType;
 import com.fly.trans4j.annotation.TransVO;
 import com.fly.trans4j.core.TransFactory;
@@ -54,7 +54,7 @@ public class DictTransService extends AbstractTransService implements Initializi
             if (StrUtil.isNotBlank(ref)) {
                 ReflectUtil.setFieldValue(vo, ref, transValue);
             } else {
-                TransHolder.set(field.getName() + suffix, transValue);
+                TransHolder.set(vo,field.getName() + suffix, transValue);
             }
         }
     }

@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>trans4j-spring-boot-starter</artifactId>
+    <description>trans4j springboot starter</description>
 
     <dependencies>
         <dependency>
