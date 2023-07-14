@@ -1,5 +1,16 @@
 server:
   port: 7001
+spring:
+  datasource:
+    url: jdbc:h2:mem:test_db
+    hikari:
+      maximum-pool-size: 10 #连接池的最大连接数默认为10
+      idle-timeout: 600000 #闲置连接的超时时间默认为60秒
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath*:db/schema.sql
+      data-locations: classpath*:db/data.sql
 trans:
   enable-global: true
   enable-proxy: true

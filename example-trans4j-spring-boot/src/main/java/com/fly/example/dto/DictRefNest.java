@@ -14,11 +14,11 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class DictRefNest implements TransVO {
-    @Trans(key = "sex_enum", ref = "sexName")
+    @Trans(key = "sex_enum", refs = "sexName")
     private Integer sex = 1;
     private String sexName;
 
-    @Trans(key = "sex_enum", ref = "genderName")
+    @Trans(key = "sex_enum", refs = "genderName")
     private Integer gender = 2;
     private String genderName;
 
@@ -27,7 +27,7 @@ public class DictRefNest implements TransVO {
     @Data
     @Accessors(chain = true)
     public static class Student implements TransVO{
-        @Trans(key = "sex_enum", ref = "sexName")
+        @Trans(key = "sex_enum", refs = "sexName")
         private Integer sex = 1;
         private String sexName;
     }

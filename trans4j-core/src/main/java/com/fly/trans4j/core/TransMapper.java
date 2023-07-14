@@ -53,7 +53,7 @@ public class TransMapper {
                 transObjectFields(object);
             }
             TransConfiguration configuration = TransConfiguration.getInstance();
-            log.info("clazz name：{}", object.getClass().getName());
+//            log.info("clazz name：{}", object.getClass().getName());
             return (configuration.getEnableProxy()) ? ProxyUtil.createProxyVo(object) : object;
         } catch (Exception e) {
             log.error("翻译失败", e);

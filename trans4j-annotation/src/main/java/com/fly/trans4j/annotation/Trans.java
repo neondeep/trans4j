@@ -26,12 +26,22 @@ public @interface Trans {
     String key() default "";
 
     /**
-     * 引用字段，翻译的值最终会映射到该ref的字段，注意该字段必须存在于实体
+     * 翻译的值最终会映射到该refs的字段，注意该字段必须存在于实体
      */
-    String ref() default "";
+    String[] refs() default {};
 
     /**
      * 当不指定ref时，代理模式字段后缀
      */
     String suffix() default "Name";
+
+    /**
+     * 单表翻译的目标class
+     */
+    Class<?> target() default Void.class;
+
+    /**
+     * 需要目标class哪些字段
+     */
+    String[] fields() default {};
 }

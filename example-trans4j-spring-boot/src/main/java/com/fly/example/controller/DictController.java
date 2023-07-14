@@ -26,12 +26,25 @@ public class DictController {
         return R.success(new DictRef());
     }
 
-
     @Operation(summary = "字典翻译（ref嵌套）")
     @GetMapping("dictRefNest")
     public R<DictRefNest> dictRefNest() {
         return R.success(new DictRefNest());
     }
+
+    @Operation(summary = "字典翻译（ref嵌套列表）")
+    @GetMapping("dictRefNestList")
+    public R<DictRefNestList> dictRefNestList() {
+        DictRefNestList vo = new DictRefNestList();
+        List<DictRefNestList.Student> studentList = new ArrayList<>();
+        studentList.add(new DictRefNestList.Student().setSex(1));
+        studentList.add(new DictRefNestList.Student().setSex(2));
+        studentList.add(new DictRefNestList.Student().setSex(0));
+        studentList.add(new DictRefNestList.Student().setSex(2));
+        vo.setList(studentList);
+        return R.success(vo);
+    }
+
 
     @Operation(summary = "字典翻译（ref列表）")
     @GetMapping("dictRefList")
@@ -42,16 +55,11 @@ public class DictController {
         return R.success(list);
     }
 
+
     @Operation(summary = "字典翻译（代理）")
     @GetMapping("dictProxy")
     public R<DictProxy> dictProxy() {
         return R.success(new DictProxy());
-    }
-
-    @Operation(summary = "字典翻译（代理嵌套）")
-    @GetMapping("dictProxyNest")
-    public R<DictProxyNest> dictProxyNest() {
-        return R.success(new DictProxyNest());
     }
 
     @Operation(summary = "字典翻译（代理列表）")
@@ -62,6 +70,26 @@ public class DictController {
         list.add(new DictProxy().setSex(2).setGender(1));
         return R.success(list);
     }
+
+    @Operation(summary = "字典翻译（代理嵌套）")
+    @GetMapping("dictProxyNest")
+    public R<DictProxyNest> dictProxyNest() {
+        return R.success(new DictProxyNest());
+    }
+
+    @Operation(summary = "字典翻译（代理嵌套列表）")
+    @GetMapping("dictProxyNestList")
+    public R<DictProxyNestList> dictProxyNestList() {
+        DictProxyNestList vo = new DictProxyNestList();
+        List<DictProxyNestList.Student> studentList = new ArrayList<>();
+        studentList.add(new DictProxyNestList.Student().setSex(1));
+        studentList.add(new DictProxyNestList.Student().setSex(2));
+        studentList.add(new DictProxyNestList.Student().setSex(0));
+        studentList.add(new DictProxyNestList.Student().setSex(2));
+        vo.getTeacher().setStudentList(studentList);
+        return R.success(vo);
+    }
+
 
     @Operation(summary = "字典翻译（ref json 忽略）")
     @GetMapping("dictRefJsonIgnore")

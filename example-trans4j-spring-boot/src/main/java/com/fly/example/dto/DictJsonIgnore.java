@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 public class DictJsonIgnore implements TransVO {
 
     @JsonIgnore
-    @Trans(key = "sex_enum", ref = "sexName")
+    @Trans(key = "sex_enum", refs = "sexName")
     private Integer sex = 1;
     private String sexName;
 

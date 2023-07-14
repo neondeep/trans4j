@@ -1,6 +1,7 @@
 package com.fly.example;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author 谢飞
@@ -8,4 +9,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class MainTest {
+
+    @Test
+    public void test1() {
+
+    }
 }

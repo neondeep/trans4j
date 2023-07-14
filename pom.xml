@@ -9,7 +9,7 @@
     <version>${revision}</version>
     <name>trans4j</name>
     <description>trans4j是一个翻译框架，旨在为Java应用程序提供多种翻译功能</description>
-    <url>https://gitee.com/neondeep/trans4j</url>
+    <url>https://gitee.com/neondeep/trans4j</url><!-- https://github.com/neondeep/trans4j -->
     <packaging>pom</packaging>
 
     <modules>
@@ -34,6 +34,7 @@
         <slf4j-api.version>1.7.36</slf4j-api.version>
         <servlet-api.version>4.0.1</servlet-api.version>
         <byte-buddy.version>1.12.23</byte-buddy.version>
+        <mybatis-plus.version>3.5.3</mybatis-plus.version>
     </properties>
 
     <licenses>
@@ -118,6 +119,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

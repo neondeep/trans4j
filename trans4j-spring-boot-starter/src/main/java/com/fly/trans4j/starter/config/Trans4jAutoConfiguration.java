@@ -5,6 +5,7 @@ import com.fly.trans4j.aspectj.TransMethodAspect;
 import com.fly.trans4j.core.ResponseFilter;
 import com.fly.trans4j.core.TransConfiguration;
 import com.fly.trans4j.starter.properties.TransProperties;
+import com.fly.trans4j.trans.DbTransService;
 import com.fly.trans4j.trans.DictTransService;
 import com.fly.trans4j.trans.EnumTransService;
 import org.springframework.beans.BeanUtils;
@@ -56,6 +57,10 @@ public class Trans4jAutoConfiguration implements InitializingBean {
         return new EnumTransService();
     }
 
+    @Bean
+    public DbTransService dbTransService() {
+        return new DbTransService();
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

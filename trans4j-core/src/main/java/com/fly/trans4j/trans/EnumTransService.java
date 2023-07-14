@@ -1,12 +1,12 @@
 package com.fly.trans4j.trans;
 
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.fly.trans4j.annotation.Trans;
-import com.fly.trans4j.util.TransHolder;
 import com.fly.trans4j.annotation.TransType;
 import com.fly.trans4j.annotation.TransVO;
 import com.fly.trans4j.core.TransFactory;
+import com.fly.trans4j.util.Assert;
+import com.fly.trans4j.util.TransHolder;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.lang.reflect.Field;
@@ -29,6 +29,7 @@ public class EnumTransService extends AbstractTransService implements Initializi
             if (null == trans) {
                 continue;
             }
+            Assert.notNull(trans.key(), "enum翻译时Trans注解的key不能为空");
             field.setAccessible(true);
             Object fieldValue = field.get(vo);
             if (null == fieldValue) {
@@ -38,15 +39,17 @@ public class EnumTransService extends AbstractTransService implements Initializi
 
             if (clazz.isEnum()) {
                 String key = trans.key();
-                String ref = trans.ref();
+                String[] refs = trans.refs();
                 String suffix = trans.suffix();
                 Field enumField = ReflectUtil.getField(clazz, key);
                 enumField.setAccessible(true);
                 Object transValue = enumField.get(fieldValue);
-                if (StrUtil.isNotBlank(ref)) {
-                    ReflectUtil.setFieldValue(vo, ref, transValue);
+                if (refs.length > 0) {
+                    for (String ref : refs) {
+                        ReflectUtil.setFieldValue(vo, ref, transValue);
+                    }
                 } else {
-                    TransHolder.set(vo,field.getName() + suffix, transValue);
+                    TransHolder.set(vo, field.getName() + suffix, transValue);
                 }
             }
         }

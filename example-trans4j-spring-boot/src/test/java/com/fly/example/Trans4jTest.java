@@ -2,10 +2,7 @@ package com.fly.example;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.fly.example.dto.DictRef;
-import com.fly.example.dto.DictRefNest;
-import com.fly.example.dto.EnumRef;
-import com.fly.example.dto.NoTrans;
+import com.fly.example.dto.*;
 import com.fly.example.enums.SexEnum;
 import com.fly.example.util.R;
 import lombok.extern.slf4j.Slf4j;
@@ -92,12 +89,37 @@ public class Trans4jTest {
             .andExpect(MockMvcResultMatchers.content()
                 .json(
                     wrapperR(
-                        new DictRefNest().setSex(1).setSexName("男").setGender(2).setGenderName("女").setStudent(new DictRefNest.Student().setSex(1).setSexName("男"))
+                        new DictRefNest().setSex(1).setSexName("男").setGender(2).setGenderName("女")
+                            .setStudent(new DictRefNest.Student().setSex(1).setSexName("男"))
                     )
                     , true)
             );
     }
 
+
+    @Test
+    @Order(103)
+    @DisplayName("字典翻译（ref嵌套列表）")
+    public void dictRefNestList() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictRefNestList"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(
+                    wrapperR(
+                        new DictRefNestList().setSex(1).setSexName("男").setGender(2).setGenderName("女")
+                            .setStudent(new DictRefNestList.Student().setSex(1).setSexName("男"))
+                            .setList(Arrays.asList(
+                                    new DictRefNestList.Student().setSex(1).setSexName("男"),
+                                    new DictRefNestList.Student().setSex(2).setSexName("女"),
+                                    new DictRefNestList.Student().setSex(0).setSexName("未知"),
+                                    new DictRefNestList.Student().setSex(2).setSexName("女")
+                                )
+                            )
+                    )
+                    , true)
+            );
+    }
 
     @Test
     @Order(104)
@@ -149,6 +171,32 @@ public class Trans4jTest {
                             .set("gender", 2).set("genderName", "女")
                             .set("teacher", new JSONObject().set("sex", 2).set("sexName", "女")
                                 .set("student", new JSONObject().set("sex", 1).set("sexName", "男")))
+                    )
+                    , true)
+            );
+    }
+
+    @Test
+    @Order(106)
+    @DisplayName("字典翻译（代理嵌套列表）")
+    public void dictProxyNestList() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/dict/dictProxyNestList"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(wrapperR(
+                        new JSONObject()
+                            .set("sex", 1).set("sexName", "男")
+                            .set("gender", 2).set("genderName", "女")
+                            .set("teacher", new JSONObject()
+                                .set("sex", 2).set("sexName", "女")
+                                .set("student", new JSONObject().set("sex", 1).set("sexName", "男"))
+                                .set("studentList", Arrays.asList(
+                                    new JSONObject().set("sex", 1).set("sexName", "男"),
+                                    new JSONObject().set("sex", 2).set("sexName", "女"),
+                                    new JSONObject().set("sex", 0).set("sexName", "未知"),
+                                    new JSONObject().set("sex", 2).set("sexName", "女")
+                                )))
                     )
                     , true)
             );
