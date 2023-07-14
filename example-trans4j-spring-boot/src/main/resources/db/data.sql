@@ -1,1 +1,2 @@
-INSERT INTO `student`(`id`,`name`) VALUES ('1','张三');
+INSERT INTO `student`(`id`, `name`)
+VALUES ('1', '张三');

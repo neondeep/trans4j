@@ -26,7 +26,7 @@ public class DictRefNest implements TransVO {
 
     @Data
     @Accessors(chain = true)
-    public static class Student implements TransVO{
+    public static class Student implements TransVO {
         @Trans(key = "sex_enum", refs = "sexName")
         private Integer sex = 1;
         private String sexName;

@@ -53,22 +53,22 @@ public class DbTransService extends AbstractTransService implements Initializing
                 BaseMapper<?> mapper = (BaseMapper<?>) configuration.getMapper(Class.forName(tableInfo.getCurrentNamespace()), sqlSession);
                 Object targetData = mapper.selectById((Serializable) fieldValue);
 
-                Map<String, Object> voCacheMap = new LinkedHashMap<>();
+                Map<String, Object> targetCacheMap = new LinkedHashMap<>();
                 Field[] targetFields = ReflectUtil.getFields(targetData.getClass());
                 for (Field targetField : targetFields) {
-                    voCacheMap.put(targetField.getName(), ReflectUtil.getFieldValue(targetData, targetField));
+                    targetCacheMap.put(targetField.getName(), ReflectUtil.getFieldValue(targetData, targetField));
                 }
                 String[] refs = trans.refs();
                 if (refs.length > 0) {
                     Assert.isTrue(refs.length == fields.length, "db翻译如果使用ref，那么refs和fields长度需要一样，字段映射严格按照顺序映射");
                     for (int i = 0; i < fields.length; i++) {
                         String fieldName = fields[i];
-                        Object fieldNameValue = voCacheMap.get(fieldName);
+                        Object fieldNameValue = targetCacheMap.get(fieldName);
                         ReflectUtil.setFieldValue(vo, refs[i], fieldNameValue);
                     }
                 } else {
                     for (String fieldName : fields) {
-                        Object fieldNameValue = voCacheMap.get(fieldName);
+                        Object fieldNameValue = targetCacheMap.get(fieldName);
                         TransHolder.set(vo, fieldName, fieldNameValue);
                     }
                 }
