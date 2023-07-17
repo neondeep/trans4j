@@ -87,8 +87,11 @@ public class TransMapper {
      * @return 翻译后的对象
      */
     public Object transObjectListFields(Object collection) throws Exception {
-        Collection<Object> result;
         Collection<?> objectList = (Collection<?>) collection;
+        if (!(objectList.iterator().next() instanceof TransVO)) {
+            return objectList;
+        }
+        Collection<Object> result;
         if (objectList instanceof List) {
             result = new ArrayList<>();
         } else if (objectList instanceof Set) {

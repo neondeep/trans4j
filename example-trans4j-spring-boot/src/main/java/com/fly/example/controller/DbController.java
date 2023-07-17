@@ -1,5 +1,6 @@
 package com.fly.example.controller;
 
+import com.fly.example.dto.DbArray;
 import com.fly.example.dto.DbProxy;
 import com.fly.example.dto.DbRef;
 import com.fly.example.util.R;
@@ -28,5 +29,11 @@ public class DbController {
     @GetMapping("dbProxy")
     public R<DbProxy> dbProxy() {
         return R.success(new DbProxy());
+    }
+
+    @Operation(summary = "db翻译（数组）")
+    @GetMapping("dbArray")
+    public R<DbArray> dbArray() {
+        return R.success(new DbArray());
     }
 }

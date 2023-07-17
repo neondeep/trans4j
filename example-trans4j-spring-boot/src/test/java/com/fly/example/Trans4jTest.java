@@ -265,6 +265,57 @@ public class Trans4jTest {
             );
     }
 
+    @Test
+    @Order(301)
+    @DisplayName("数据库翻译（ref）")
+    public void dbRefTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/db/dbRef"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(
+                    wrapperR(
+                        new JSONObject().set("studentId", 1).set("studentName", "张三").set("studentCreateTime", "2023-07-17 12:12:12")
+                    )
+                    , true)
+            );
+    }
+
+    @Test
+    @Order(301)
+    @DisplayName("数据库翻译（代理）")
+    public void dbProxyTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/db/dbProxy"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(
+                    wrapperR(
+                        new JSONObject().set("studentId", 1).set("name", "张三").set("createTime", "2023-07-17T12:12:12")
+                    )
+                    , true)
+            );
+    }
+
+    @Test
+    @Order(301)
+    @DisplayName("数据库翻译（数组）")
+    public void dbArrayTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/db/dbArray"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(
+                    wrapperR(
+                        new JSONObject().set("id1List", Arrays.asList(1,2,3))
+                            .set("id2List",Arrays.asList(1,2,3))
+                            .set("name2", "张三,李四,王五")
+                            .set("createTime2", "2023-07-17T12:12:12,2023-07-17T12:12:12,2023-07-17T12:12:12")
+                    )
+                    , true)
+            );
+    }
+
     /**
      * 包裹R后的json数据
      */

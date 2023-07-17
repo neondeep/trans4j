@@ -14,5 +14,6 @@ public class ExampleApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(ExampleApplication.class, args);
         System.out.printf("http://localhost:%s/doc.html\n", context.getEnvironment().getProperty("server.port"));
+        System.out.printf("http://localhost:%s/h2-console\n", context.getEnvironment().getProperty("server.port"));
     }
 }

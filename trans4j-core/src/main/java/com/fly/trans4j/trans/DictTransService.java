@@ -6,7 +6,6 @@ import com.fly.trans4j.annotation.TransType;
 import com.fly.trans4j.annotation.TransVO;
 import com.fly.trans4j.core.TransFactory;
 import com.fly.trans4j.util.Assert;
-import com.fly.trans4j.util.TransHolder;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.lang.reflect.Field;
@@ -57,7 +56,7 @@ public class DictTransService extends AbstractTransService implements Initializi
                     ReflectUtil.setFieldValue(vo, ref, transValue);
                 }
             } else {
-                TransHolder.set(vo, field.getName() + suffix, transValue);
+                proxySet(vo, field.getName() + suffix, transValue);
             }
         }
     }
