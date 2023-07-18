@@ -1,5 +1,6 @@
 package com.fly.example.controller;
 
+import com.fly.example.dto.Composite;
 import com.fly.example.dto.NoTrans;
 import com.fly.example.util.R;
 import com.fly.trans4j.annotation.IgnoreTrans;
@@ -25,4 +26,9 @@ public class TestController {
         return R.success(new NoTrans());
     }
 
+    @Operation(summary = "混合翻译")
+    @GetMapping("composite")
+    public R<Composite> composite(){
+        return R.success(new Composite());
+    }
 }

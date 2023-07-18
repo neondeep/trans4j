@@ -46,15 +46,13 @@ public class TransMapper {
                 transObjectFields(object);
             } else if (object instanceof Collection) {// 对象列表翻译
                 return transObjectListFields(object);
-            } else if (object.getClass().getName().startsWith("java.")) {
+            } else if (object.getClass().getName().startsWith("java.")) {// java类直接跳过
                 return object;
             } else {
                 // 如果不是TransVO，循环遍历看是否有字段类型属于TransVO
                 transObjectFields(object);
             }
-            TransConfiguration configuration = TransConfiguration.getInstance();
-//            log.info("clazz name：{}", object.getClass().getName());
-            return (configuration.getEnableProxy()) ? ProxyUtil.createProxyVo(object) : object;
+            return ProxyUtil.createProxyVo(object);
         } catch (Exception e) {
             log.error("翻译失败", e);
             return object;
@@ -70,8 +68,12 @@ public class TransMapper {
         // 获取一个类的所有字段，包括父类
         Field[] fields = ReflectUtil.getFields(object.getClass());
         for (Field field : fields) {
-            // 排除不翻译的字段
+            // 排除final、static修饰的字段
             if (Modifier.isFinal(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+            // 排除基本数据类型的字段
+            if (field.getType().isPrimitive()) {
                 continue;
             }
             field.setAccessible(true);

@@ -33,9 +33,9 @@ public class JacksonConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
         return builder -> builder
-                .locale(Locale.CHINA)
-                .timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()))
-                .modules(new JavaTimeModule());
+            .locale(Locale.CHINA)
+            .timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()))
+            .modules(new JavaTimeModule());
     }
 
     public static class JavaTimeModule extends SimpleModule {

@@ -16,12 +16,13 @@ import java.util.List;
 @Data
 public class DbArray implements TransVO {
 
+    // 代理
     @Trans(type = TransType.DB, target = Student.class, fields = {"name", "createTime"})
     private List<Integer> id1List = Arrays.asList(1, 2, 3);
 
+    // ref
     @Trans(type = TransType.DB, target = Student.class, fields = {"name", "createTime"}, refs = {"name2", "createTime2"})
-    private List<Integer> id2List = Arrays.asList(1, 2, 3);
-
+    private List<Integer> id2List = Arrays.asList(2, 3);
     private String name2;
     private String createTime2;
 }

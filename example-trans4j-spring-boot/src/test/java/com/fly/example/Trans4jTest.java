@@ -307,10 +307,34 @@ public class Trans4jTest {
             .andExpect(MockMvcResultMatchers.content()
                 .json(
                     wrapperR(
-                        new JSONObject().set("id1List", Arrays.asList(1,2,3))
-                            .set("id2List",Arrays.asList(1,2,3))
-                            .set("name2", "张三,李四,王五")
-                            .set("createTime2", "2023-07-17T12:12:12,2023-07-17T12:12:12,2023-07-17T12:12:12")
+                        new JSONObject()
+                            .set("id1List", Arrays.asList(1, 2, 3))
+                            .set("name", "张三,李四,王五")
+                            .set("createTime", "2023-07-17T12:12:12,2023-07-17T12:12:12,2023-07-17T12:12:12")
+                            .set("id2List", Arrays.asList(2, 3))
+                            .set("name2", "李四,王五")
+                            .set("createTime2", "2023-07-17T12:12:12,2023-07-17T12:12:12")
+                    )
+                    , true)
+            );
+    }
+
+    @Test
+    @Order(301)
+    @DisplayName("混合翻译")
+    public void compositeTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/test/composite"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(
+                    wrapperR(
+                        new JSONObject()
+                            .set("dictProxySex", 1).set("dictProxySexName", "男")
+                            .set("dictRefSex", 2).set("dictRefSexName", "女")
+                            .set("enumProxySexName", "男")
+                            .set("enumRefSexName", "男")
+                            .set("student", new JSONObject().set("sex", 1).set("sexName", "男"))
                     )
                     , true)
             );

@@ -22,4 +22,3 @@ spring:
       path: /h2-console
 trans:
   enable-global: true
-  enable-proxy: true

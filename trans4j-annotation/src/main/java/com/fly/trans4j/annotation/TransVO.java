@@ -6,4 +6,13 @@ package com.fly.trans4j.annotation;
  */
 public interface TransVO {
 
+    /**
+     * 获取唯一值
+     *
+     * @return 唯一值
+     */
+    default Object unique() {
+        return "";
+    }
+
 }
