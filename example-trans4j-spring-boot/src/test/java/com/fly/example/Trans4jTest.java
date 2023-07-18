@@ -321,6 +321,28 @@ public class Trans4jTest {
 
     @Test
     @Order(301)
+    @DisplayName("db翻译（逗号分割的字符串）")
+    public void dbStrCommaTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/db/dbStrComma"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content()
+                .json(
+                    wrapperR(
+                        new JSONObject()
+                            .set("id1Str", "1,2,3")
+                            .set("name", "张三,李四,王五")
+                            .set("createTime", "2023-07-17T12:12:12,2023-07-17T12:12:12,2023-07-17T12:12:12")
+                            .set("id2Str", "2,3")
+                            .set("name2", "李四,王五")
+                            .set("createTime2", "2023-07-17T12:12:12,2023-07-17T12:12:12")
+                    )
+                    , true)
+            );
+    }
+
+    @Test
+    @Order(301)
     @DisplayName("混合翻译")
     public void compositeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/test/composite"))

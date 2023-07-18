@@ -11,7 +11,7 @@ public interface TransVO {
      *
      * @return 唯一值
      */
-    default Object unique() {
+    default Object transUnique() {
         return "";
     }
 

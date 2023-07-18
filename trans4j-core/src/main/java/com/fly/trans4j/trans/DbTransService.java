@@ -68,16 +68,33 @@ public class DbTransService extends AbstractTransService implements Initializing
                         }
                     }
                 } else {
-                    Serializable id = (Serializable) fieldValue;
-                    Object data = mapper.selectById(id);
-                    if (data != null) {
-                        Map<String, Object> targetData = new HashMap<>();
-                        Field[] targetFields = ReflectUtil.getFields(data.getClass());
-                        for (Field targetField : targetFields) {
-                            targetField.setAccessible(true);
-                            targetData.put(targetField.getName(), targetField.get(data));
+                    if (fieldValue instanceof String) {
+                        String fieldValueStr = (String) fieldValue;
+                        String[] split = fieldValueStr.split(",");
+                        if (split.length > 0) {
+                            List<Serializable> serializableIdList = Arrays.stream(split).map(id -> (Serializable) id).collect(Collectors.toList());
+                            List<?> dataList = mapper.selectBatchIds(serializableIdList);
+                            for (Object data : dataList) {
+                                Map<String, Object> targetData = new HashMap<>();
+                                for (Field targetField : data.getClass().getDeclaredFields()) {
+                                    targetField.setAccessible(true);
+                                    targetData.put(targetField.getName(), targetField.get(data));
+                                }
+                                targetDataList.add(targetData);
+                            }
                         }
-                        targetDataList.add(targetData);
+                    } else {
+                        Serializable id = (Serializable) fieldValue;
+                        Object data = mapper.selectById(id);
+                        if (data != null) {
+                            Map<String, Object> targetData = new HashMap<>();
+                            Field[] targetFields = ReflectUtil.getFields(data.getClass());
+                            for (Field targetField : targetFields) {
+                                targetField.setAccessible(true);
+                                targetData.put(targetField.getName(), targetField.get(data));
+                            }
+                            targetDataList.add(targetData);
+                        }
                     }
                 }
 

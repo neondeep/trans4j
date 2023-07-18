@@ -31,6 +31,8 @@ public class TransHolder {
         holder.remove();
     }
 
+    // ---------------------------------------------------------------------------------------------- private method start
+
     private static void setNamespaceTransMap(String namespace, Map<String, Object> transMap) {
         Map<String, Map<String, Object>> map = holder.get();
         map.put(namespace, transMap);
@@ -42,6 +44,6 @@ public class TransHolder {
 
 
     private static String getNamespace(TransVO vo) {
-        return vo.getClass().getName() + vo.unique();
+        return vo.getClass().getName() + vo.transUnique();
     }
 }

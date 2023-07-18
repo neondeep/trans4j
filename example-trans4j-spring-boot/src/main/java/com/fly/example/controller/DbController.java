@@ -3,6 +3,7 @@ package com.fly.example.controller;
 import com.fly.example.dto.DbArray;
 import com.fly.example.dto.DbProxy;
 import com.fly.example.dto.DbRef;
+import com.fly.example.dto.DbStrComma;
 import com.fly.example.util.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,5 +36,11 @@ public class DbController {
     @GetMapping("dbArray")
     public R<DbArray> dbArray() {
         return R.success(new DbArray());
+    }
+
+    @Operation(summary = "db翻译（逗号分割的字符串）")
+    @GetMapping("dbStrComma")
+    public R<DbStrComma> dbStrComma() {
+        return R.success(new DbStrComma());
     }
 }
