@@ -1,9 +1,12 @@
+
 package com.fly.example.dto;
 
 import com.fly.trans4j.annotation.Trans;
 import com.fly.trans4j.annotation.TransVO;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * 实现sex翻译到sexName
@@ -13,22 +16,33 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class DictRefNest implements TransVO {
-    @Trans(key = "sex_enum", refs = "sexName")
+public class DictProxyNestList implements TransVO {
+    @Trans(key = "sex_enum")
     private Integer sex = 1;
-    private String sexName;
 
-    @Trans(key = "sex_enum", refs = "genderName")
+    @Trans(key = "sex_enum")
     private Integer gender = 2;
-    private String genderName;
 
-    private Student student = new Student();
+    private Teacher teacher = new Teacher();
+
+
+    @Data
+    @Accessors(chain = true)
+    public static class Teacher implements TransVO {
+        @Trans(key = "sex_enum")
+        private Integer sex = 2;
+
+        private Student student = new Student();
+
+        private List<Student> studentList;
+    }
 
     @Data
     @Accessors(chain = true)
     public static class Student implements TransVO {
-        @Trans(key = "sex_enum", refs = "sexName")
+        @Trans(key = "sex_enum")
         private Integer sex = 1;
-        private String sexName;
     }
+
+
 }

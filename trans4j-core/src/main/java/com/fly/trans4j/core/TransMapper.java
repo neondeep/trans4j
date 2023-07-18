@@ -30,28 +30,29 @@ public class TransMapper {
 
     /**
      * 翻译
+     *
+     * @param object 要翻译的对象
+     * @return 翻译后的对象
      */
     public Object trans(Object object) {
         try {
             if (null == object) {
                 return null;
             }
-            // 对象翻译
-            if (object instanceof TransVO) {
+
+            if (object instanceof TransVO) {// 对象翻译
                 handlerTransVO((TransVO) object);
                 // 看TransVO是否还有嵌套属性需要翻译
                 transObjectFields(object);
-                // 对象列表翻译
-            } else if (object instanceof Collection) {
+            } else if (object instanceof Collection) {// 对象列表翻译
                 return transObjectListFields(object);
-            } else if (object.getClass().getName().startsWith("java.")) {
+            } else if (object.getClass().getName().startsWith("java.")) {// java类直接跳过
                 return object;
             } else {
                 // 如果不是TransVO，循环遍历看是否有字段类型属于TransVO
                 transObjectFields(object);
             }
-            TransConfiguration configuration = TransConfiguration.getInstance();
-            return (configuration.getEnableProxy()) ? ProxyUtil.createProxyVo(object) : object;
+            return ProxyUtil.createProxyVo(object);
         } catch (Exception e) {
             log.error("翻译失败", e);
             return object;
@@ -67,8 +68,12 @@ public class TransMapper {
         // 获取一个类的所有字段，包括父类
         Field[] fields = ReflectUtil.getFields(object.getClass());
         for (Field field : fields) {
-            // 排除不翻译的字段
+            // 排除final、static修饰的字段
             if (Modifier.isFinal(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+            // 排除基本数据类型的字段
+            if (field.getType().isPrimitive()) {
                 continue;
             }
             field.setAccessible(true);
@@ -81,10 +86,14 @@ public class TransMapper {
      * 翻译一个List<object>的所有字段
      *
      * @param collection 对象列表
+     * @return 翻译后的对象
      */
     public Object transObjectListFields(Object collection) throws Exception {
-        Collection<Object> result;
         Collection<?> objectList = (Collection<?>) collection;
+        if (!(objectList.iterator().next() instanceof TransVO)) {
+            return objectList;
+        }
+        Collection<Object> result;
         if (objectList instanceof List) {
             result = new ArrayList<>();
         } else if (objectList instanceof Set) {
@@ -110,6 +119,24 @@ public class TransMapper {
      * @param vo TransVO
      */
     private void handlerTransVO(TransVO vo) throws Exception {
+        final Map<TransType, List<Field>> transFieldMap = getTransFieldMap(vo);
+
+        for (Map.Entry<TransType, List<Field>> entry : transFieldMap.entrySet()) {
+            TransType transType = entry.getKey();
+            List<Field> transFieldList = entry.getValue();
+            TransService transService = TransFactory.get(transType);
+            transService.trans(vo, transFieldList);
+        }
+    }
+
+    /**
+     * 获取所有类型的翻译字段
+     *
+     * @param vo vo
+     * @return 所有类型的翻译字段
+     */
+
+    private static Map<TransType, List<Field>> getTransFieldMap(TransVO vo) {
         final Map<TransType, List<Field>> transFieldMap = new HashMap<>();
         Field[] fields = ReflectUtil.getFields(vo.getClass());
         for (Field field : fields) {
@@ -126,16 +153,16 @@ public class TransMapper {
                 transFieldMap.put(transType, fieldList);
             }
         }
-
-        for (Map.Entry<TransType, List<Field>> entry : transFieldMap.entrySet()) {
-            TransType transType = entry.getKey();
-            List<Field> transFieldList = entry.getValue();
-            TransService transService = TransFactory.get(transType);
-            transService.trans(vo, transFieldList);
-        }
+        return transFieldMap;
     }
 
-    // 检查对象是否存在指定字段
+    /**
+     * 检查对象是否存在指定字段
+     *
+     * @param object    对象
+     * @param fieldName 字段名字
+     * @return 是否存在
+     */
     private boolean hasField(Object object, String fieldName) {
         try {
             object.getClass().getDeclaredField(fieldName);

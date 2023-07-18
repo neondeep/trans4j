@@ -12,6 +12,8 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencyManagement>
@@ -46,15 +48,34 @@
             <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
             <version>4.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/neondeep/ -->
         <!-- https://s01.oss.sonatype.org/content/repositories/releases//io/github/neondeep/ -->
         <!-- https://s01.oss.sonatype.org/content/groups/staging/io/github/neondeep/ -->
         <!-- https://s01.oss.sonatype.org/content/groups/public/io/github/neondeep/ -->
-        <!-- https://repo1.maven.org/maven2/io/github/neondeep/ -->
+
+        <!-- Maven Central Repository： https://repo1.maven.org/maven2/io/github/neondeep/ -->
+        <!-- Maven Central Repository 的一个镜像地址，由 Apache 软件基金会提供： https://repo.maven.apache.org/maven2/io/github/neondeep/ -->
+        <!-- 可视化界面，第三方维护的网站 https://mvnrepository.com/artifact/io.github.neondeep/ -->
         <dependency>
             <groupId>io.github.neondeep</groupId>
             <artifactId>trans4j-spring-boot-starter</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

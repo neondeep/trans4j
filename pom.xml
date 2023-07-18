@@ -9,7 +9,7 @@
     <version>${revision}</version>
     <name>trans4j</name>
     <description>trans4j是一个翻译框架，旨在为Java应用程序提供多种翻译功能</description>
-    <url>https://gitee.com/neondeep/trans4j</url>
+    <url>https://gitee.com/neondeep/trans4j</url><!-- https://github.com/neondeep/trans4j -->
     <packaging>pom</packaging>
 
     <modules>
@@ -19,7 +19,7 @@
     </modules>
 
     <properties>
-        <revision>1.0.0</revision><!-- -SNAPSHOT -->
+        <revision>1.0.1</revision>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -34,6 +34,7 @@
         <slf4j-api.version>1.7.36</slf4j-api.version>
         <servlet-api.version>4.0.1</servlet-api.version>
         <byte-buddy.version>1.12.23</byte-buddy.version>
+        <mybatis-plus.version>3.5.3</mybatis-plus.version>
     </properties>
 
     <licenses>
@@ -48,6 +49,9 @@
         <developer>
             <name>霓虹深处</name>
             <email>1308207524@qq.com</email>
+            <roles>
+                <role>author</role>
+            </roles>
         </developer>
     </developers>
 
@@ -69,7 +73,6 @@
                 <artifactId>trans4j-core</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
@@ -102,7 +105,6 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
             <dependency>
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy</artifactId>
@@ -117,6 +119,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -134,6 +141,19 @@
 
     <build>
         <plugins>
+            <!-- Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <fork>true</fork>
+                    <verbose>true</verbose>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <!-- Source -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -211,6 +231,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -221,25 +242,6 @@
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                     </archive>
-                </configuration>
-            </plugin>
-            <!--Release -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.1</version>
-            </plugin>
-            <!--Compiler -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <fork>true</fork>
-                    <verbose>true</verbose>
-                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>

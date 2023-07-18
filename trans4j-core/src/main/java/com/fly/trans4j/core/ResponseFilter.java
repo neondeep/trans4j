@@ -1,6 +1,6 @@
 package com.fly.trans4j.core;
 
-import com.fly.trans4j.annotation.TransHolder;
+import com.fly.trans4j.util.TransHolder;
 
 import javax.servlet.*;
 import java.io.IOException;

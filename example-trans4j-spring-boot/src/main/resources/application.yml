@@ -1,5 +1,24 @@
 server:
   port: 7001
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test_db
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/test?setUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+#    username: root
+#    password: root
+    hikari:
+      maximum-pool-size: 10 #连接池的最大连接数默认为10
+      idle-timeout: 600000 #闲置连接的超时时间默认为60秒
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath*:db/schema.sql
+      data-locations: classpath*:db/data.sql
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 trans:
   enable-global: true
-  enable-proxy: true

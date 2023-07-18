@@ -19,9 +19,4 @@ public class TransProperties {
      * 2、如果对于性能要求很高可关闭此配置
      */
     private Boolean enableGlobal = Boolean.FALSE;
-    /**
-     * 开启代理模式
-     * 1、最终transMap的属性会扁平化到实体
-     */
-    private Boolean enableProxy = Boolean.TRUE;
 }

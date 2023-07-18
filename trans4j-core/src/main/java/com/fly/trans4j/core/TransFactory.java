@@ -1,6 +1,7 @@
 package com.fly.trans4j.core;
 
 import com.fly.trans4j.annotation.TransType;
+import com.fly.trans4j.exception.TransException;
 import com.fly.trans4j.trans.TransService;
 
 import java.util.LinkedHashMap;
@@ -19,6 +20,10 @@ public class TransFactory {
     }
 
     public static TransService get(TransType transType) {
-        return transServiceMap.get(transType);
+        TransService transService = transServiceMap.get(transType);
+        if (null == transService) {
+            throw new TransException("翻译类型未找到实现类");
+        }
+        return transService;
     }
 }

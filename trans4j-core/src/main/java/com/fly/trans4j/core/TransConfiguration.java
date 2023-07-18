@@ -11,8 +11,6 @@ public class TransConfiguration {
 
     private Boolean enableGlobal;
 
-    private Boolean enableProxy;
-
     private static final TransConfiguration INSTANCE = new TransConfiguration();
 
     private TransConfiguration() {

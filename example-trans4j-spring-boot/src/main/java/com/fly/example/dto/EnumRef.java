@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class EnumRef implements TransVO {
 
-    @Trans(type = TransType.ENUM, key = "desc", ref = "sexEnumNameRef")
+    @Trans(type = TransType.ENUM, key = "desc", refs = "sexEnumNameRef")
     private SexEnum sex = SexEnum.MALE;
     private String sexEnumNameRef;
 }

@@ -1,3 +1,4 @@
+
 package com.fly.example.dto;
 
 import com.fly.trans4j.annotation.Trans;
@@ -13,22 +14,31 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class DictRefNest implements TransVO {
-    @Trans(key = "sex_enum", refs = "sexName")
+public class DictProxyNest implements TransVO {
+    @Trans(key = "sex_enum")
     private Integer sex = 1;
-    private String sexName;
 
-    @Trans(key = "sex_enum", refs = "genderName")
+    @Trans(key = "sex_enum")
     private Integer gender = 2;
-    private String genderName;
 
-    private Student student = new Student();
+    private Teacher teacher = new Teacher();
+
+
+    @Data
+    @Accessors(chain = true)
+    public static class Teacher implements TransVO {
+        @Trans(key = "sex_enum")
+        private Integer sex = 2;
+
+        private Student student = new Student();
+    }
 
     @Data
     @Accessors(chain = true)
     public static class Student implements TransVO {
-        @Trans(key = "sex_enum", refs = "sexName")
+        @Trans(key = "sex_enum")
         private Integer sex = 1;
-        private String sexName;
     }
+
+
 }

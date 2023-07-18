@@ -2,12 +2,10 @@ package com.fly.trans4j.util;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ReflectUtil;
-import com.fly.trans4j.annotation.TransHolder;
 import com.fly.trans4j.annotation.TransVO;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
-import net.bytebuddy.implementation.FixedValue;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.ClassUtils;
 
@@ -30,7 +28,7 @@ public class ProxyUtil {
             }
 
             TransVO vo = (TransVO) object;
-            Map<String, Object> transMap = TransHolder.get();
+            Map<String, Object> transMap = TransHolder.get(vo);
             if (transMap == null) {
                 return vo;
             }
@@ -49,7 +47,7 @@ public class ProxyUtil {
     }
 
     private static Class<?> genNewClass(TransVO vo) {
-        Map<String, Object> transMap = TransHolder.get();
+        Map<String, Object> transMap = TransHolder.get(vo);
         Class<?> targetClass = proxyClassMap.get(vo.getClass());
         if (null != targetClass) {
             return targetClass;
