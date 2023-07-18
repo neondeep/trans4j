@@ -15,35 +15,32 @@ trans4j是一个翻译框架，旨在为Java应用程序提供多种翻译功能
 - 场景1：我有一个字段，有一个对应的字典，我想展示字典的描述给用户
 - 场景2：我有一个枚举字段，我想展示枚举里面的某个属性给用户
 - 场景3：我有一个其他表的主键，我想通过主键查询出该表的某些字段给用户
-
-待完成
-
-- 我有一组userIdList 比如 1,2,3 我希望能展示成 张三,李四,王五 给客户
+- 场景4：我有一组userIdList 比如 [1,2,3] 我希望能展示成 张三,李四,王五 给客户
+- 场景5：我有一组userIdStr 比如 1,2,3 我希望能展示成 张三,李四,王五 给客户
 
 ## 快速开始
 
 > 所有的使用案例都在example-trans4j-spring-boot里面，直接下载源码看即可
-
-添加依赖:
 
 ```xml
 
 <dependency>
     <groupId>io.github.neondeep</groupId>
     <artifactId>trans4j-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <version>最新版</version>
+    <version>快照版-SNAPSHOT</version>
 </dependency>
+
 ```
 
-在yaml配置：
+yaml配置
 
 ```yml
 trans:
     enable-global: true
-    enable-proxy: true
 ```
 
-vo配置，所有的vo是要实现了TransVO接口即可实现翻译，下面用ExampleVO举例：
+vo配置，所有的vo是要实现了TransVO接口即可实现翻译，下面用ExampleVO举例
 
 ```java
 
