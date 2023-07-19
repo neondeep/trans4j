@@ -64,18 +64,20 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/neondeep/ -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/releases//io/github/neondeep/ -->
-        <!-- https://s01.oss.sonatype.org/content/groups/staging/io/github/neondeep/ -->
+        <!--快照仓库：https://s01.oss.sonatype.org/content/repositories/snapshots/ -->
+        <!--暂存仓库：https://s01.oss.sonatype.org/content/groups/staging/ -->
+        <!--发布仓库：https://s01.oss.sonatype.org/content/repositories/releases/ -->
+        <!--公共仓库：https://s01.oss.sonatype.org/content/groups/public/ -->
+
         <!-- https://s01.oss.sonatype.org/content/groups/public/io/github/neondeep/ -->
 
         <!-- Maven Central Repository： https://repo1.maven.org/maven2/io/github/neondeep/ -->
-        <!-- Maven Central Repository 的一个镜像地址，由 Apache 软件基金会提供： https://repo.maven.apache.org/maven2/io/github/neondeep/ -->
-        <!-- 可视化界面，第三方维护的网站 https://mvnrepository.com/artifact/io.github.neondeep/ -->
+        <!-- Maven Central Repository： https://repo.maven.apache.org/maven2/io/github/neondeep/ -->
+        <!-- 可视化界面：https://mvnrepository.com/artifact/io.github.neondeep/ -->
         <dependency>
             <groupId>io.github.neondeep</groupId>
             <artifactId>trans4j-spring-boot-starter</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
 

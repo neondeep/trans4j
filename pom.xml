@@ -9,7 +9,7 @@
     <version>${revision}</version>
     <name>trans4j</name>
     <description>trans4j是一个翻译框架，旨在为Java应用程序提供多种翻译功能</description>
-    <url>https://gitee.com/neondeep/trans4j</url><!-- https://github.com/neondeep/trans4j -->
+    <url>https://gitee.com/neondeep/trans4j</url>
     <packaging>pom</packaging>
 
     <modules>
@@ -128,13 +128,17 @@
         </dependencies>
     </dependencyManagement>
 
+    <!-- https://central.sonatype.org/publish/publish-guide -->
+    <!-- https://central.sonatype.org/publish/publish-maven -->
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
+            <name>Sonatype Nexus Snapshots</name>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
+            <name>Nexus Release Repository</name>
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
@@ -242,6 +246,18 @@
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <!-- https://central.sonatype.org/publish/publish-maven/#nexus-staging-maven-plugin-for-deployment-and-release -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>

@@ -22,16 +22,19 @@ trans4j是一个翻译框架，旨在为Java应用程序提供多种翻译功能
 
 > 所有的使用案例都在example-trans4j-spring-boot里面，直接下载源码看即可
 
+添加依赖
+
 ```xml
 
 <dependency>
     <groupId>io.github.neondeep</groupId>
     <artifactId>trans4j-spring-boot-starter</artifactId>
     <version>最新版</version>
-    <version>快照版-SNAPSHOT</version>
 </dependency>
 
 ```
+
+> 最新功能可以在快照版体验，最新版-SNAPSHOT
 
 yaml配置
 
